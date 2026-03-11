@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BettyAutoDs Portfolio</title>
@@ -33,6 +34,38 @@ body{
 background:var(--bg);
 color:var(--text);
 transition:.4s;
+}
+
+/* Mobile Responsive */
+@media (max-width:768px){
+
+body{
+padding:10px;
+text-align:center;
+}
+
+.container{
+flex-direction:column;
+}
+
+img{
+width:100%;
+height:auto;
+}
+
+h1{
+font-size:28px;
+}
+
+p{
+font-size:16px;
+}
+
+nav{
+flex-direction:column;
+gap:10px;
+}
+
 }
 
 /* NAVBAR */
@@ -194,8 +227,137 @@ padding:15px;
 font-size:14px;
 }
 
+/* INTRO SCREEN */
+
+#intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:black;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+overflow:hidden;
+}
+
+.intro-text{
+color:white;
+font-size:40px;
+font-weight:bold;
+z-index:2;
+animation:fadeText 2s ease;
+}
+
+.door{
+position:absolute;
+top:0;
+width:50%;
+height:100%;
+background:#111;
+z-index:1;
+}
+
+.left-door{
+left:0;
+}
+
+.right-door{
+right:0;
+}
+
+.open .left-door{
+animation:openLeft 1.5s forwards;
+}
+
+.open .right-door{
+animation:openRight 1.5s forwards;
+}
+
+@keyframes openLeft{
+to{
+transform:translateX(-100%);
+}
+}
+
+@keyframes openRight{
+to{
+transform:translateX(100%);
+}
+}
+
+@keyframes fadeText{
+0%{opacity:0}
+100%{opacity:1}
+}
+
+.cursor{
+width:20px;
+height:20px;
+border-radius:50%;
+background:#2563eb;
+position:fixed;
+pointer-events:none;
+transform:translate(-50%,-50%);
+mix-blend-mode:difference;
+transition:transform .1s;
+z-index:9999;
+box-shadow:0 0 20px #2563eb,0 0 40px #2563eb;
+}
+
+#particles{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+}
+
+.btn{
+transition:transform .2s;
+}
+
+.project{
+transform-style:preserve-3d;
+transition:transform .3s;
+}
+
+.project:hover{
+transform:rotateX(5deg) rotateY(5deg) scale(1.05);
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+.hero h1{
+background:linear-gradient(90deg,#2563eb,#22c55e,#06b6d4);
+-webkit-background-clip:text;
+color:transparent;
+animation:gradientMove 6s infinite linear;
+}
+
+@keyframes gradientMove{
+0%{background-position:0%}
+100%{background-position:200%}
+}
+
 </style>
 </head>
+
+<div id="intro">
+
+<div class="door left-door"></div>
+<div class="door right-door"></div>
+
+<div class="intro-text">
+<h1>Betty Alfred</h1>
+</div>
+
+</div>
 
 <body>
 
@@ -233,7 +395,7 @@ font-size:14px;
 
 <div>
 
-<h1>Full Stack Developer</h1>
+  <h1>I am <span id="typing"></span></h1>
 
 <p>                                                                                                     
 I build scalable web applications and modern digital experiences.
@@ -347,6 +509,7 @@ and scalable backend systems.
 
 </div>
 
+<div class="cursor"></div>
 
 <footer>
 
@@ -360,6 +523,119 @@ and scalable backend systems.
 function toggleMode(){
 document.body.classList.toggle("dark");
 }
+
+</script>
+
+<script>
+
+window.addEventListener("load", ()=>{
+
+setTimeout(()=>{
+document.getElementById("intro").classList.add("open");
+},2000);
+
+setTimeout(()=>{
+document.getElementById("intro").style.display="none";
+},3500);
+
+});
+
+</script>
+
+<script>
+
+const words = ["Full Stack Developer","Web Designer","JavaScript Developer","Ai Prompt Engineer"];
+
+let i = 0;
+let j = 0;
+let currentWord = "";
+let isDeleting = false;
+
+function type(){
+
+currentWord = words[i];
+
+if(isDeleting){
+j--;
+}else{
+j++;
+}
+
+document.getElementById("typing").textContent = currentWord.substring(0,j);
+
+if(!isDeleting && j === currentWord.length){
+isDeleting = true;
+setTimeout(type,1000);
+return;
+}
+
+if(isDeleting && j === 0){
+isDeleting = false;
+i++;
+if(i === words.length){
+i = 0;
+}
+}
+
+setTimeout(type,120);
+
+}
+
+type();
+
+</script>
+
+<script>
+
+const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove", e=>{
+cursor.style.left = e.clientX + "px";
+cursor.style.top = e.clientY + "px";
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+<div id="particles"></div>
+
+<script>
+
+tsParticles.load("particles", {
+particles:{
+number:{value:60},
+size:{value:3},
+move:{speed:1},
+links:{
+enable:true,
+distance:150,
+color:"#2563eb"
+}
+}
+});
+
+</script>
+
+<script>
+
+document.querySelectorAll(".btn").forEach(btn=>{
+
+btn.addEventListener("mousemove",(e)=>{
+
+const rect = btn.getBoundingClientRect();
+const x = e.clientX - rect.left - rect.width/2;
+const y = e.clientY - rect.top - rect.height/2;
+
+btn.style.transform = `translate(${x*0.2}px,${y*0.2}px)`;
+
+});
+
+btn.addEventListener("mouseleave",()=>{
+btn.style.transform = "translate(0,0)";
+});
+
+});
 
 </script>
 
