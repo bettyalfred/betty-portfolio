@@ -345,6 +345,72 @@ animation:gradientMove 6s infinite linear;
 100%{background-position:200%}
 }
 
+#ai-assistant{
+position:fixed;
+bottom:20px;
+right:20px;
+width:320px;
+background:#1e293b;
+border-radius:12px;
+padding:15px;
+color:white;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+font-size:14px;
+}
+
+.ai-header{
+font-weight:600;
+margin-bottom:10px;
+}
+
+.ai-chat{
+height:200px;
+overflow-y:auto;
+margin-bottom:10px;
+}
+
+.ai-chat p{
+margin:6px 0;
+}
+
+#aiInput{
+width:70%;
+padding:8px;
+border:none;
+border-radius:6px;
+}
+
+#ai-assistant button{
+padding:8px 12px;
+border:none;
+background:#3b82f6;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+.ai-toggle{
+position:fixed;
+bottom:20px;
+right:20px;
+width:60px;
+height:60px;
+border-radius:50%;
+background:#2563eb;
+color:white;
+border:none;
+font-size:24px;
+cursor:pointer;
+}
+
+#ai-assistant{
+display:none;
+}
+
+#ai-assistant.active{
+display:block;
+}
+
 </style>
 </head>
 
@@ -511,6 +577,24 @@ and scalable backend systems.
 
 <div class="cursor"></div>
 
+<div id="ai-assistant">
+
+<div class="ai-header">
+🤖 Betty AI
+</div>
+
+<div class="ai-chat" id="aiChat"></div>
+
+<input 
+type="text" 
+id="aiInput" 
+placeholder="Ask about Betty..."
+/>
+
+<button onclick="askAI()">Send</button>
+
+</div>
+
 <footer>
 
  <h1>© 2026 BettyAutoDs Portfolio</h1>
@@ -636,6 +720,72 @@ btn.style.transform = "translate(0,0)";
 });
 
 });
+
+</script>
+
+<script>
+
+function askAI(){
+
+let input = document.getElementById("aiInput");
+let chat = document.getElementById("aiChat");
+
+let question = input.value.toLowerCase();
+
+chat.innerHTML += "<p><b>You:</b> "+input.value+"</p>";
+
+let answer = "";
+
+if(question.includes("who")){
+answer = "This portfolio belongs to Betty Alfred, a Full Stack Developer, Web Designer, and the best Ai Automation Engineer";
+
+}
+
+else if(question.includes("skills")){
+answer = "Betty works with HTML, CSS, JavaScript, React and Node.js.";
+
+}
+
+else if(question.includes("projects")){
+answer = "Betty has built projects like an E-commerce Website, AI Automation Tool and Developer Dashboard.";
+
+}
+
+else if(question.includes("contact")){
+answer = "You can contact Betty through the contact section of this website.";
+
+}
+
+else{
+
+answer = "I'm Betty's AI assistant. Ask me about his skills, projects or how to contact him.";
+
+}
+
+setTimeout(()=>{
+chat.innerHTML += "<p><b>AI:</b> "+answer+"</p>";
+},500);
+
+input.value="";
+
+}
+
+</script>
+
+<button onclick="toggleAI()" class="ai-toggle">
+💬
+</button>
+
+<script>
+
+function toggleAI(){
+
+document
+.getElementById("ai-assistant")
+.classList
+.toggle("active");
+
+}
 
 </script>
 
