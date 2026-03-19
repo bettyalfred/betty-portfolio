@@ -12,6 +12,8 @@
       rel="stylesheet"
     />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     <style>
 
 /* ===== GLOBAL MOBILE-FIRST RESET ===== */
@@ -75,24 +77,15 @@ p {
   }
 }
 
-  header {
-  position: sticky;
-  top: 10px;
-  margin: 10px auto;
-  width: 95%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 12px 16px;
-
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-
-  border-radius: 20px;
-  z-index: 1000;
+header {
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.6);
 }
+
+body.dark header {
+  background: rgba(15,23,42,0.7);
+}
+ 
 
 /* NAV MOBILE */
 nav {
@@ -255,7 +248,6 @@ nav.active {
     display: none;
   }
 
-}
 
       /* NAVBAR */
       header{
@@ -322,7 +314,9 @@ z-index:1000;
 }
 
 .hero h1 {
-  font-size: clamp(24px, 6vw, 40px);
+  background: none;
+  color: var(--text);
+  font-weight: 700;
 }
 
 .hero p {
@@ -396,26 +390,28 @@ gap:30px;
 
   box-shadow:
   0 25px 45px rgba(0,0,0,0.25),
-  0 0 25px rgba(37,99,235,0.3);
 
 }
 
 /* glow border layer */
 
-.service-card::before{
-content:"";
-position:absolute;
-inset:0;
-border-radius:14px;
-padding:1px;
-background:linear-gradient(120deg,#2563eb,#22c55e,#06b6d4);
-opacity:0;
-transition:opacity .35s ease;
--webkit-mask:
-linear-gradient(#000 0 0) content-box,
-linear-gradient(#000 0 0);
--webkit-mask-composite:xor;
-mask-composite:exclude;
+.service-card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 28px;
+
+  border: 1px solid rgba(0,0,0,0.06);
+
+  transition: all .3s ease;
+}
+
+body.dark .service-card {
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
 }
 
 /* hover animation */
@@ -446,19 +442,31 @@ font-size:14px;
 line-height:1.6;
 }
 
-.skill-circle{
-position:absolute;
-top:20px;
-right:20px;
-width:50px;
-height:50px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:12px;
-background:conic-gradient(#2563eb calc(var(--percent)*1%), transparent 0);
-color:var(--text);
+.skill-circle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  background: conic-gradient(#2563eb 0%, transparent 0%);
+  transition: background 0.6s ease;
+
+  cursor: pointer;
+}
+
+.skill-circle span {
+  position: relative;
+  z-index: 2;
 }
 
       .about {
@@ -480,23 +488,36 @@ color:var(--text);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
       }
 
-      /* PROJECTS */
+/* ===== PROJECT CARD UPGRADE ===== */
+
+.project {
+  position: relative;
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+
+  border: 1px solid rgba(0,0,0,0.06);
+
+  transition: all .4s ease;
+  transform-style: preserve-3d;
+}
+
+.project {
+  padding-bottom: 10px; /* adds space inside card */
+}
 
 .projects {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.project img {
-  height: 180px;
-  object-fit: cover;
+  gap: 30px; /* increased from 20px */
+  margin-top: 30px;
 }
 
 /* Tablet */
 @media (min-width: 600px) {
   .projects {
     grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
   }
 }
 
@@ -504,58 +525,156 @@ color:var(--text);
 @media (min-width: 1024px) {
   .projects {
     grid-template-columns: repeat(3, 1fr);
+    gap: 35px; /* more breathing space */
   }
 }
 
-      .project {
-        background: cover;
-        border-radius: 10px;
-        padding: 15px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        transition: 0.5s;
-      }
+/* IMAGE */
+.project img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
 
-      .project {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: transform 0.2s ease;
+  transition: transform .5s ease;
 }
 
+/* CONTENT */
+.project h3 {
+  padding: 15px 15px 5px;
+  font-size: 18px;
+}
+
+.project p {
+  padding: 0 15px 10px;
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+/* VIEW PROJECT BUTTON */
+.project .view-btn {
+  display: block;
+  margin: 10px 15px 18px;
+  padding: 10px;
+
+  text-align: center;
+  border-radius: 8px;
+
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all .3s ease;
+}
+
+/* HOVER EFFECT */
 .project:hover {
-  transform: scale(1.04);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
-      .project:hover {
-        transform: translateY(-5px);
-      }
-
-
-      /* CONTACT */
-.contact{
-text-align:center;
-padding:60px 10%;
-background:var(--card);
-color:var(--text);
+/* IMAGE ZOOM */
+.project:hover img {
+  transform: scale(1.08);
 }
 
-.contact-buttons{
-margin-top:20px;
+/* SHOW BUTTON ON HOVER */
+.project:hover .view-btn {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.contact-buttons a{
-display:inline-block;
-margin:10px;
-padding:12px 20px;
-background:#2563eb;
-border-radius:8px;
-color:white;
-text-decoration:none;
-transition:0.3s;
+/* LIGHT GLOW SWEEP */
+.project::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.25),
+    transparent
+  );
+
+  opacity: 0;
+  transition: .6s;
 }
 
-.contact-buttons a:hover{
-transform:translateY(-3px);
+.project:hover::after {
+  opacity: 1;
 }
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+  .project .view-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+section {
+  max-width: 1100px;
+  margin: auto;
+}
+
+@media (min-width: 1024px) {
+  .projects {
+    gap: 45px; /* premium spacing */
+  }
+}
+
+
+/* Contact links container */
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Each button */
+.contact-links a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-radius: 8px;
+
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--text);
+
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+
+  border: 1px solid rgba(37, 99, 235, 0.2);
+
+  transition: all 0.3s ease;
+}
+
+/* Icon */
+.contact-links i {
+  font-size: 16px;
+}
+
+/* Hover effect */
+.contact-links a:hover {
+  background: #2563eb;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.contact-links a:nth-child(1):hover { background: #25D366; } /* WhatsApp */
+.contact-links a:nth-child(2):hover { background: #171515; } /* GitHub */
+.contact-links a:nth-child(3):hover { background: #000; }    /* X */
+.contact-links a:nth-child(4):hover { background: #1877F2; } /* Facebook */
+.contact-links a:nth-child(5):hover { background: #E4405F; } /* Instagram */
 
       footer {
         text-align: center;
@@ -649,48 +768,8 @@ transform:translateY(-3px);
           0 0 40px #2563eb;
       }
 
-      #particles {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: -1;
-      }
-
       .btn {
         transition: transform 0.2s;
-      }
-
-      .project {
-        transform-style: preserve-3d;
-        transition: transform 0.3s;
-      }
-
-      .project::after{
-
-content:"";
-position:absolute;
-inset:0;
-
-background:linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,0.2),
-transparent
-);
-
-opacity:0;
-transition:.5s;
-
-}
-
-.project:hover::after{
-opacity:1;
-}
-
-      .project:hover {
-        transform: rotateX(5deg) rotateY(5deg) scale(1.05);
       }
 
       html {
@@ -865,6 +944,219 @@ section {
   }
 }
 
+body {
+  letter-spacing: -0.2px;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+p {
+  opacity: 0.85;
+}
+
+section {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.services-section,
+.journey,
+.contact {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+@media (max-width: 600px) {
+  .project img {
+    height: 180px;
+  }
+}
+
+.service-card:hover .skill-circle {
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.6);
+}
+
+.skill-circle {
+  transition: background 0.3s linear;
+}
+
+/* CONTACT SECTION FIX (DESKTOP + CENTERING) */
+.contact {
+  text-align: center;
+  max-width: 700px;
+  margin: 80px auto;
+}
+
+/* Center the buttons */
+.contact-links {
+  justify-content: center;
+}
+
+/* Improve spacing + alignment */
+.contact h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.contact p {
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+/* Desktop enhancement */
+@media (min-width: 768px) {
+  .contact-links {
+    gap: 15px;
+  }
+
+  .contact-links a {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+}
+
+.contact {
+  background: var(--card);
+  padding: 40px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* FORCE 3 PER ROW ON DESKTOP */
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+.logo img {
+  transition: 0.3s;
+}
+
+/* When dark mode is ON */
+body.dark .logo img {
+  filter: invert(1);
+}
+
+/* ===== ABOUT PRO UPGRADE ===== */
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* LEFT TEXT */
+.about-text {
+  animation: fadeLeft 1s ease forwards;
+}
+
+.about-intro {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.about-intro span {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* TEXT STYLE */
+.about-text p {
+  margin-bottom: 15px;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+/* STATS */
+.about-stats {
+  display: flex;
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.about-stats div {
+  background: var(--card);
+  padding: 15px 20px;
+  border-radius: 10px;
+  text-align: center;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.about-stats div:hover {
+  transform: translateY(-8px);
+}
+
+.about-stats h3 {
+  color: #2563eb;
+  font-size: 22px;
+}
+
+/* SKILLS */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  animation: fadeRight 1s ease forwards;
+}
+
+.skill {
+  background: var(--card);
+  padding: 10px 16px;
+  border-radius: 20px;
+
+  font-size: 14px;
+  transition: 0.3s;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.skill:hover {
+  background: #2563eb;
+  color: white;
+  transform: scale(1.08);
+}
+
+/* ANIMATIONS */
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+  .about {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .about-stats {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
        
     </style>
 
@@ -883,7 +1175,7 @@ section {
     <header>
       <div class="logo">
         <!-- ADD YOUR LOGO HERE -->
-        <img src="./image/logo/portfoliologo.jpeg" />
+        <img src="./image/logo2.png" />
 
         <span>BettyAutoDs</span>
       </div>
@@ -927,7 +1219,9 @@ Specialized in multiple domains of software engineering
 <div class="services-grid">
 
 <div class="service-card">
-<div class="skill-circle" data-percent="80">80%</div>
+<div class="skill-circle" data-percent="80">
+  <span>80%</span>
+</div>
 <h3>Frontend Development</h3>
 <p>
 Crafting responsive and interactive web applications using
@@ -1070,54 +1364,64 @@ refactoring code for long-term growth.
 
     <!-- ABOUT -->
 
-    <section>
-      <h2 class="title" id="about">About Me</h2>
+ <section id="about">
+  <h2 class="title">About Me ✨</h2>
 
-      <div class="about">
+  <div class="about">
+
+    <!-- LEFT SIDE -->
+    <div class="about-text">
+      <p class="about-intro">
+        👋 Hi, I'm <span>Betty Alfred</span>
+      </p>
+
+      <p>
+        A passionate Full Stack Developer focused on building modern,
+        scalable, and visually stunning web applications. I combine
+        clean code with creative design to deliver powerful digital experiences.
+      </p>
+
+      <p>
+        With expertise in frontend, backend, AI tools, and automation,
+        I turn ideas into real-world solutions that are fast, responsive,
+        and user-focused.
+      </p>
+
+      <div class="about-stats">
         <div>
-          <p>
-            I'm Betty Alfred, a 19-year-old Techie with 5 years of experience. I
-            specialize in web development, robotics, blockchain development, and
-            short video animation, crafting clean and effective digital
-            solutions also a passionate Full Stack Developer focused on building
-            modern web applications with great user experiences. I also bridges
-            the gap between technical complexity and intuitive user design.
-          </p>
-
-          <br />
-
-          <p>
-            Certified and skilled developer with a proven track record of
-            delivering live, production-ready software projects. Active tech
-            content creator, passionate about sharing knowledge and driving
-            innovation in software engineering. I specialize in building
-            responsive applications, automation tools, and scalable backend
-            systems.
-          </p>
+          <h3>5+</h3>
+          <p>Years Experience</p>
         </div>
 
-        <div class="skills">
-          <span class="skill">HTML</span>
-          <span class="skill">CSS</span>
-          <span class="skill">JavaScript</span>
-          <span class="skill">React</span>
-          <span class="skill">Node.js</span>
-          <span class="skill">Express</span>
-          <span class="skill">MongoDB</span>
-          <span class="skill">Python</span>
-          <span class="skill">Bootstrap</span>
-          <span class="skill">TailwindCSS</span>
-          <span class="skill">Move</span>
-          <span class="skill">TypeScript</span>
-          <span class="skill">Jquery</span>
-          <span class="skill">GitHub</span>
-          <span class="skill">Git</span>
-          <span class="skill">Figma</span>
-          <span class="skill">Solidity</span>
-          <span class="skill">Firebase</span>
+        <div>
+          <h3>20+</h3>
+          <p>Projects Built</p>
+        </div>
+
+        <div>
+          <h3>100%</h3>
+          <p>Client Focus</p>
         </div>
       </div>
-    </section>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="skills">
+      <span class="skill">HTML</span>
+      <span class="skill">CSS</span>
+      <span class="skill">JavaScript</span>
+      <span class="skill">React</span>
+      <span class="skill">Node.js</span>
+      <span class="skill">MongoDB</span>
+      <span class="skill">Python</span>
+      <span class="skill">TypeScript</span>
+      <span class="skill">Tailwind</span>
+      <span class="skill">Figma</span>
+      <span class="skill">Firebase</span>
+    </div>
+
+  </div>
+</section>
 
     <!-- PROJECTS -->
 
@@ -1129,12 +1433,14 @@ refactoring code for long-term growth.
           <img src="./image/Ai automation pics.png" />
           <h3>AI Automation Tool</h3>
           <p>Automation platform that uses AI to generate content.</p>
+          <a href="#" class="view-btn">View Project</a>
         </div>
 
         <div class="project">
           <img src="./image/Ecommerce pics.png" />
           <h3>E-commerce Website</h3>
           <p>Full stack online store with payments and admin panel.</p>
+          <a href="#" class="view-btn">View Project</a>
         </div>
 
         <div class="project">
@@ -1142,15 +1448,15 @@ refactoring code for long-term growth.
 
           <h3>Developer Dashboard</h3>
           <p>Analytics dashboard built with React and Node.</p>
+          <a href="#" class="view-btn">View Project</a>
         </div>
 
         <div class="project">
           <img src="./image/calculator pics.png" width="100%" height="500vh;" />
-          <div>
+
             <h3>Calculator App</h3>
             <p>Very smart app built with HTML CSS and JavaScript</p>
-          </div>
-        </div>
+            <a href="#" class="view-btn">View Project</a>
       </div>
     </section>
 
@@ -1161,18 +1467,28 @@ refactoring code for long-term growth.
 
       <p>Interested in working together?</p>
 
-      <div class="contact-buttons">
-        <a href="https://wa.me/2348107090499">WhatsApp</a>
-        <a href="#">GitHub</a>
-        <a href="#">X</a>
-        <a href="https://www.facebook.com/share/181H3aq7By/?mibextid=wwXIfr"
-          >Facebook</a
-        >
-        <a href="#">Instagram</a>
-      </div>
-    </div>
+ <div class="contact-links">
+  <a href="https://wa.me/2348107090499" target="_blank">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+  </a>
 
-    <div class="cursor"></div>
+  <a href="#">
+    <i class="fab fa-github"></i> GitHub
+  </a>
+
+  <a href="#">
+    <i class="fab fa-x-twitter"></i> X
+  </a>
+
+  <a href="https://www.facebook.com/share/181H3aq7By/?mibextid=wwXIfr">
+    <i class="fab fa-facebook"></i> Facebook
+  </a>
+
+  <a href="#">
+    <i class="fab fa-instagram"></i> Instagram
+  </a>
+</div>
+
 
     <div id="ai-assistant">
       <div class="ai-header">🤖 Betty AI</div>
@@ -1263,27 +1579,6 @@ refactoring code for long-term growth.
       });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-
-    <div id="particles"></div>
-
-    <script>
-  if (window.innerWidth > 768) {
-  tsParticles.load("particles", {
-    particles: {
-      number: { value: 60 },
-      size: { value: 3 },
-      move: { speed: 1 },
-      links: {
-        enable: true,
-        distance: 150,
-        color: "#2563eb",
-      },
-    },
-  });
-}
-    </script>
-
     <script>
       document.querySelectorAll(".btn").forEach((btn) => {
         btn.addEventListener("mousemove", (e) => {
@@ -1346,24 +1641,6 @@ refactoring code for long-term growth.
 <script>
 document.querySelectorAll(".project").forEach(card => {
 
-  card.addEventListener("mousemove", e => {
-
-    const rect = card.getBoundingClientRect();
-
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-
-    card.style.transform =
-      `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-
-  });
-
   card.addEventListener("mouseleave", () => {
     card.style.transform = "rotateX(0) rotateY(0) scale(1)";
   });
@@ -1372,25 +1649,57 @@ document.querySelectorAll(".project").forEach(card => {
 </script>
 
 <script>
-document.querySelectorAll(".skill-circle").forEach(circle => {
+document.querySelectorAll(".service-card").forEach(card => {
+  const circle = card.querySelector(".skill-circle");
+  const percent = circle.getAttribute("data-percent");
 
-  let percent = circle.getAttribute("data-percent");
+  let interval;
 
-  let current = 0;
+  function fillCircle() {
+    let current = 0;
 
-  let interval = setInterval(() => {
+    clearInterval(interval);
 
-    current++;
+    interval = setInterval(() => {
+      current++;
 
-    circle.style.background =
-      `conic-gradient(#2563eb ${current}%, transparent 0)`;
+      circle.style.background =
+        `conic-gradient(#2563eb ${current}%, transparent 0)`;
 
-    circle.innerHTML = current + "%";
+      if (current >= percent) {
+        clearInterval(interval);
+      }
+    }, 8);
+  }
 
-    if (current >= percent) clearInterval(interval);
+  function resetCircle() {
+    let current = percent;
 
-  }, 20);
+    clearInterval(interval);
 
+    interval = setInterval(() => {
+      current--;
+
+      circle.style.background =
+        `conic-gradient(#2563eb ${current}%, transparent 0)`;
+
+      if (current <= 0) {
+        clearInterval(interval);
+      }
+    }, 5);
+  }
+
+  // Hover in
+  card.addEventListener("mouseenter", fillCircle);
+
+  // Hover out (THIS IS WHAT YOU WANTED)
+  card.addEventListener("mouseleave", resetCircle);
+
+  // Mobile tap (acts like hover)
+  card.addEventListener("click", () => {
+    fillCircle();
+    setTimeout(resetCircle, 1500);
+  });
 });
 </script>
 
