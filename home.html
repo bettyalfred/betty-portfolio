@@ -5,6 +5,16 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <meta name="description" content="Betty Alfred - Full Stack Developer Portfolio">
+    <meta name="keywords" content="Web Developer, React, Node, Portfolio , Best Portfolio , JavaScript">
+
+    <meta property="og:title" content="Betty Alfred Portfolio">
+    <meta property="og:image" content="preview.png">
+    <meta property="og:description" content="Full Stack Developer Portfolio">
+
+    <meta name="author" content="Betty Alfred">
+    <meta name="theme-color" content="#2563eb">
+
     <title>BettyAutoDs Portfolio</title>
 
     <link
@@ -103,11 +113,14 @@ nav {
   justify-content: center;
   gap: 25px;
 
-  transition: 0.4s;
+  transition: all 0.5s ease;
+  opacity: 0;
 }
 
+/* when open */
 nav.active {
   right: 0;
+  opacity: 1;
 }
 
 .menu-btn {
@@ -115,13 +128,51 @@ nav.active {
   font-size: 22px;
 }
 
+/* ===== HAMBURGER MENU (PRO) ===== */
+.menu-btn {
+  width: 30px;
+  height: 22px;
+  position: relative;
+  cursor: pointer;
+  z-index: 1100;
+}
 
-  /* MENU BUTTON */
-  .menu-btn {
-    display: block;
-    font-size: 24px;
-    cursor: pointer;
-  }
+.menu-btn span {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: var(--text);
+  border-radius: 3px;
+  transition: all 0.4s ease;
+}
+
+/* 3 lines */
+.menu-btn span:nth-child(1) {
+  top: 0;
+}
+
+.menu-btn span:nth-child(2) {
+  top: 9px;
+}
+
+.menu-btn span:nth-child(3) {
+  bottom: 0;
+}
+
+/* ===== ANIMATION TO X ===== */
+.menu-btn.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 9px;
+}
+
+.menu-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  bottom: 10px;
+}
 
   /* HERO FIX */
   .hero {
@@ -861,6 +912,26 @@ section {
 background:radial-gradient(circle,#020249,#bccef0);
 }
 
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.ai-header img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.ai-header img {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
 .journey{
 padding:100px 10%;
 background:var(--bg);
@@ -1157,10 +1228,340 @@ body.dark .logo img {
     flex-wrap: wrap;
   }
 }
-       
+
+/* ===== BACKDROP OVERLAY ===== */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: all 0.4s ease;
+  z-index: 900;
+}
+
+/* when active */
+.nav-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+nav.active a {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== TESTIMONIALS (PRO LEVEL) ===== */
+/* WRAPPER */
+.testimonial-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+/* TRACK (MOVES) */
+.testimonial-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+
+  animation: scrollTest 25s linear infinite;
+}
+
+/* CARD */
+.testimonial-card {
+  min-width: 300px;
+  max-width: 320px;
+}
+
+/* SCROLL ANIMATION */
+@keyframes scrollTest {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* dark mode fix */
+body.dark .testimonial-card {
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.testimonial-track:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .testimonial-card {
+    min-width: 85%;
+  }
+}
+
+.trust {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* ===== DOWNLOAD CV BUTTON (PRO LEVEL) ===== */
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 40px auto;
+  padding: 14px 28px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  border-radius: 12px;
+
+  background: linear-gradient(135deg, #2563eb, #06b6d4);
+  color: #fff;
+
+  text-decoration: none;
+
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+
+  transition: all 0.3s ease;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* hover */
+.cv-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.5);
+}
+
+/* click */
+.cv-btn:active {
+  transform: scale(0.96);
+}
+
+/* glow animation */
+.cv-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.3),
+    transparent
+  );
+
+  opacity: 0;
+  transition: 0.6s;
+}
+
+.cv-btn:hover::after {
+  opacity: 1;
+}
+
+/* MOBILE FULL WIDTH */
+@media (max-width: 600px) {
+  .cv-btn {
+    width: 100%;
+  }
+}
+
+/* ===== TRUSTED BY BRANDS ===== */
+.brands {
+  text-align: center;
+  padding: 60px 10%;
+}
+
+.brands-title {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 30px;
+}
+
+/* slider container */
+.brands-slider {
+  overflow: hidden;
+  position: relative;
+}
+
+/* moving track */
+.brands-track {
+  display: flex;
+  gap: 60px;
+  width: max-content;
+
+  animation: scrollBrands 25s linear infinite;
+}
+
+/* logos */
+.brands-track img {
+  height: 40px;
+  opacity: 0.7;
+  filter: grayscale(100%);
+  transition: 0.3s;
+}
+
+/* hover effect */
+.brands-track img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.1);
+}
+
+/* animation */
+@keyframes scrollBrands {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .brands-track {
+    gap: 30px;
+  }
+
+  .brands-track img {
+    height: 30px;
+  }
+}
+
+/* CTA Section Styles */
+:root {
+  /* LIGHT MODE */
+  --cta-bg: #ffffff; /* background white for light mode */
+  --cta-text: #1f2937; /* dark text for contrast */
+  --cta-text-secondary: #4b5563;
+  --cta-card: rgba(255,255,255,0.8); /* slightly translucent card */
+  --cta-primary-bg: #4f46e5;
+  --cta-primary-text: #fff;
+  --cta-secondary-border: #4f46e5;
+  --cta-secondary-text: #4f46e5;
+}
+
+/* DARK MODE */
+body.dark {
+  --cta-bg: linear-gradient(135deg, #0f172a, #1e293b);
+  --cta-text: #e5e7eb;
+  --cta-text-secondary: #d1d5db;
+  --cta-card: rgba(15,23,42,0.7);
+  --cta-primary-bg: #2563eb;
+  --cta-primary-text: #fff;
+  --cta-secondary-border: #e5e7eb;
+  --cta-secondary-text: #e5e7eb;
+}
+
+.cta {
+  background: var(--cta-bg); /* uses white in light, gradient in dark */
+  color: var(--cta-text);
+  text-align: center;
+  padding: 100px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s, color 0.4s;
+}
+
+.cta-box {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--cta-card);
+  padding: 50px 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: background 0.4s, color 0.4s, box-shadow 0.4s;
+}
+
+.cta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.cta p {
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  color: var(--cta-text-secondary);
+}
+
+.cta-buttons a {
+  padding: 15px 35px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.cta-primary {
+  background: var(--cta-primary-bg);
+  color: var(--cta-primary-text);
+  box-shadow: 0 8px 20px rgba(79,70,229,0.3);
+}
+
+.cta-primary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(79,70,229,0.4);
+}
+
+.cta-secondary {
+  border: 2px solid var(--cta-secondary-border);
+  color: var(--cta-secondary-text);
+}
+
+.cta-secondary:hover {
+  background: rgba(79,70,229,0.1); /* subtle hover on light */
+  transform: translateY(-5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cta h2 { font-size: 2rem; }
+  .cta p { font-size: 1rem; }
+  .cta-buttons a { width: 100%; text-align: center; }
+}
+
     </style>
 
   </head>
+
+  <body>
+        <div class="trust">
+  <span>✔ Trusted by startups</span>
+  <span>✔ 20+ projects delivered</span>
+  <span>✔ 5★ client satisfaction</span>
+</div>
 
   <div id="intro">
     <div class="door left-door"></div>
@@ -1171,13 +1572,13 @@ body.dark .logo img {
     </div>
   </div>
 
-  <body>
+    <div class="nav-overlay" onclick="toggleMenu()"></div>
     <header>
       <div class="logo">
         <!-- ADD YOUR LOGO HERE -->
         <img src="./image/logo2.png" />
 
-        <span>BettyAutoDs</span>
+        <span>Bae_T</span>
       </div>
 
       <nav>
@@ -1189,7 +1590,11 @@ body.dark .logo img {
 
       <div class="toggle" onclick="toggleMode()">🌙</div>
 
-      <div class="menu-btn" onclick="toggleMenu()">☰</div>
+      <div class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+     </div>
 
     </header>
 
@@ -1425,8 +1830,8 @@ refactoring code for long-term growth.
 
     <!-- PROJECTS -->
 
-    <section>
-      <h2 class="title" id="project">Projects</h2>
+    <section id="project">
+      <h2 class="title">Projects</h2>
 
       <div class="projects">
         <div class="project">
@@ -1460,6 +1865,164 @@ refactoring code for long-term growth.
       </div>
     </section>
 
+  <section style="text-align:center;">
+  <a href="resume.pdf" class="cv-btn" download>
+    <i class="fas fa-download"></i> Download Resume
+  </a>
+</section>
+
+    <div class="cursor"></div>
+
+    <!--Brands-->
+    <section class="brands">
+  <p class="brands-title">Trusted by brands</p>
+
+  <div class="brands-slider">
+    <div class="brands-track">
+
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg" />
+
+      <!-- duplicate for smooth scroll -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg" />
+
+    </div>
+  </div>
+</section>
+
+<!--CTA-->
+<section class="cta">
+  <div class="cta-box">
+
+    <h2>Let’s Build Something Amazing 🚀</h2>
+
+    <p>
+      Got an idea, startup, or project? 
+      I help brands and businesses turn concepts into powerful digital products.
+    </p>
+
+    <div class="cta-buttons">
+      <a href="#contact" class="cta-primary">
+        🚀 Hire Me Now
+      </a>
+
+      <a href="#project" class="cta-secondary">
+        View My Work
+      </a>
+    </div>
+
+  </div>
+</section>
+    <!--Testimonials-->
+    <section class="testimonials">
+  <h2 class="title">What Clients Say 💬</h2>
+  <p class="test-sub">Real feedback from people I've worked with</p>
+
+  <div class="testimonial-wrapper">
+    <div class="testimonial-track">
+               <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>
+        Betty delivered beyond expectations. The UI was stunning and performance was top-notch.
+      </p>
+
+      <div class="client">
+        <img src="https://i.pravatar.cc/100?img=1">
+        <div>
+          <h4>Michael Johnson</h4>
+          <span>Startup Founder</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>
+        Very professional and fast delivery. Communication was excellent throughout the project.
+      </p>
+
+      <div class="client">
+        <img src="https://i.pravatar.cc/100?img=2">
+        <div>
+          <h4>Sarah Williams</h4>
+          <span>Product Manager</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>
+        Clean code, modern design, and great attention to detail. Highly recommended.
+      </p>
+
+      <div class="client">
+        <img src="https://i.pravatar.cc/100?img=3">
+        <div>
+          <h4>David Lee</h4>
+          <span>Tech Lead</span>
+        </div>
+      </div>
+    </div>
+
+       <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>
+        Betty delivered beyond expectations. The UI was stunning and performance was top-notch.
+      </p>
+
+      <div class="client">
+        <img src="https://i.pravatar.cc/100?img=1">
+        <div>
+          <h4>Michael Johnson</h4>
+          <span>Startup Founder</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>
+        Very professional and fast delivery. Communication was excellent throughout the project.
+      </p>
+
+      <div class="client">
+        <img src="https://i.pravatar.cc/100?img=2">
+        <div>
+          <h4>Sarah Williams</h4>
+          <span>Product Manager</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>
+        Clean code, modern design, and great attention to detail. Highly recommended.
+      </p>
+
+      <div class="client">
+        <img src="https://i.pravatar.cc/100?img=3">
+        <div>
+          <h4>David Lee</h4>
+          <span>Tech Lead</span>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</section>
+
     <!-- CONTACT -->
 
     <div class="contact" id="contact">
@@ -1472,7 +2035,7 @@ refactoring code for long-term growth.
     <i class="fab fa-whatsapp"></i> WhatsApp
   </a>
 
-  <a href="#">
+  <a href="https://github.com/bettyalfred/betty-portfolio">
     <i class="fab fa-github"></i> GitHub
   </a>
 
@@ -1480,7 +2043,7 @@ refactoring code for long-term growth.
     <i class="fab fa-x-twitter"></i> X
   </a>
 
-  <a href="https://www.facebook.com/share/181H3aq7By/?mibextid=wwXIfr">
+  <a href="https://www.facebook.com/share/18ehTGD15y/?mibextid=wwXIfr">
     <i class="fab fa-facebook"></i> Facebook
   </a>
 
@@ -1491,7 +2054,10 @@ refactoring code for long-term growth.
 
 
     <div id="ai-assistant">
-      <div class="ai-header">🤖 Betty AI</div>
+      <div class="ai-header">
+  <img src="./image/logo2.png" alt="Betty Logo">
+  <span>Betty AI</span>
+</div>
 
       <div class="ai-chat" id="aiChat"></div>
 
@@ -1499,6 +2065,8 @@ refactoring code for long-term growth.
 
       <button onclick="askAI()">Send</button>
     </div>
+
+    <img src="..." loading="lazy">
 
     <footer>
       <h1>© 2026 BettyAutoDs Portfolio</h1>
@@ -1595,40 +2163,99 @@ refactoring code for long-term growth.
       });
     </script>
 
-    <script>
-      function askAI() {
-        let input = document.getElementById("aiInput");
-        let chat = document.getElementById("aiChat");
+<script>
+const responses = [
+  {
+    keywords: ["who", "betty"],
+    answer: "Betty Alfred is a Full Stack Developer who builds modern, scalable web applications and AI-powered solutions."
+  },
+  {
+    keywords: ["skills", "tech"],
+    answer: "Betty specializes in HTML, CSS, JavaScript, React, Node.js, Python, and AI automation tools."
+  },
+  {
+    keywords: ["project", "work"],
+    answer: "He has built projects like an AI Automation Tool, E-commerce platform, Developer Dashboard, and more."
+  },
+  {
+    keywords: ["hire", "work with you", "job"],
+    answer: "You can hire Betty by clicking the 'Hire Me' button or reaching out through the contact section."
+  },
+  {
+    keywords: ["price", "cost", "rate"],
+    answer: "Pricing depends on the project scope. Feel free to contact Betty for a custom quote."
+  },
+  {
+    keywords: ["contact", "reach"],
+    answer: "You can contact Betty via WhatsApp, GitHub, or social links in the contact section."
+  }
+];
 
-        let question = input.value.toLowerCase();
+function askAI() {
+  const input = document.getElementById("aiInput");
+  const chat = document.getElementById("aiChat");
 
-        chat.innerHTML += "<p><b>You:</b> " + input.value + "</p>";
+  let userText = input.value.trim();
+  if (!userText) return;
 
-        let answer = "";
+  // Add user message
+  chat.innerHTML += `<p><b>You:</b> ${userText}</p>`;
 
-        if (question.includes("who")) {
-          answer =
-            "This portfolio belongs to Betty Alfred, a Full Stack Developer, Web Designer, the best Ai Automation Engineer";
-        } else if (question.includes("skills")) {
-          answer = "Betty works with HTML, CSS, JavaScript, React and Node.js.";
-        } else if (question.includes("projects")) {
-          answer =
-            "Betty has built projects like an E-commerce Website, AI Automation Tool and Developer Dashboard.";
-        } else if (question.includes("contact")) {
-          answer =
-            "You can contact Betty through the contact section of this website.";
-        } else {
-          answer =
-            "I'm Betty's AI assistant. Ask me about his skills, projects or how to contact him.";
-        }
+  let lower = userText.toLowerCase();
+  let reply = "";
 
-        setTimeout(() => {
-          chat.innerHTML += "<p><b>AI:</b> " + answer + "</p>";
-        }, 500);
+  // Find matching response
+  for (let item of responses) {
+    if (item.keywords.some(k => lower.includes(k))) {
+      reply = item.answer;
+      break;
+    }
+  }
 
-        input.value = "";
-      }
-    </script>
+  // Default smart reply
+  if (!reply) {
+    reply = "That's a great question! You can ask me about Betty's skills, projects, experience, or how to work with him.";
+  }
+
+  // Typing effect
+  let aiMsg = document.createElement("p");
+  aiMsg.innerHTML = "<b>AI:</b> <span></span>";
+  chat.appendChild(aiMsg);
+
+  let span = aiMsg.querySelector("span");
+  let i = 0;
+
+  function typeEffect() {
+    if (i < reply.length) {
+      span.textContent += reply.charAt(i);
+      i++;
+      setTimeout(typeEffect, 15);
+    }
+  }
+
+  setTimeout(typeEffect, 300);
+
+  // Auto scroll
+  chat.scrollTop = chat.scrollHeight;
+
+  input.value = "";
+}
+</script>
+
+<script>
+document.getElementById("aiInput").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    askAI();
+  }
+});
+</script>
+
+<script>
+window.addEventListener("load", () => {
+  const chat = document.getElementById("aiChat");
+  chat.innerHTML = `<p><b>AI:</b> Hi 👋 I'm Betty's AI assistant. Ask me anything about his work, skills, or projects!</p>`;
+});
+</script>
 
     <button onclick="toggleAI()" class="ai-toggle">💬</button>
 
@@ -1788,7 +2415,7 @@ animateCursor()
 
 const journeyCards=document.querySelectorAll(".journey-card")
 
-const observer=new IntersectionObserver(entries=>{
+const journeyObserver=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
 entry.target.style.opacity=1
@@ -1808,8 +2435,30 @@ observer.observe(card)
 
 <script>
 function toggleMenu() {
-  document.querySelector("nav").classList.toggle("active");
+  const nav = document.querySelector("nav");
+  const btn = document.querySelector(".menu-btn");
+  const overlay = document.querySelector(".nav-overlay");
+
+  nav.classList.toggle("active");
+  btn.classList.toggle("active");
+  overlay.classList.toggle("active");
 }
+</script>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    const target = document.querySelector(this.getAttribute("href"));
+
+    if(target){
+      target.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+  });
+});
 </script>
 
   </body>
